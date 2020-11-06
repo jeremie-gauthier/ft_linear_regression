@@ -4,12 +4,19 @@ from .src.Data import Data
 from .src.gradient_descent import gradient_descent
 
 
+def normalize(data):
+    min_data = min(data)
+    max_data = max(data)
+
+    return map(lambda d: (d - min_data) / (max_data - min_data), data)
+
+
 def load_dataset():
     df = csv.load("./learning/data.csv")
 
     kms = csv.dataframe(df, "km")
     prices = csv.dataframe(df, "price")
-    plots = [Data(x, y) for x, y in zip(kms, prices)]
+    plots = [Data(x, y) for x, y in zip(normalize(kms), normalize(prices))]
     return plots
 
 
