@@ -9,7 +9,7 @@ def _simultaneous_update(theta_0, theta_1, plots, learning_rate):
     return (new_theta_0, new_theta_1)
 
 
-def gradient_descent(theta_0, theta_1, plots, learning_rate=0.01, iterations=100):
+def gradient_descent(theta_0, theta_1, plots, learning_rate, iterations):
     new_theta_0 = theta_0
     new_theta_1 = theta_1
     for i in range(iterations):
