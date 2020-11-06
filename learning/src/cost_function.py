@@ -1,5 +1,5 @@
 def cost_fn(theta_0, theta_1, plots):
-    H0 = lambda x: theta_0 + theta_1 * x
+    H0 = lambda plotX: theta_0 + (theta_1 * plotX)
 
     len_dataset = len(plots)
     diff_squares = map(lambda plot: (H0(plot.x) - plot.y) ** 2, plots)
