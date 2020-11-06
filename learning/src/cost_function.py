@@ -7,6 +7,3 @@ def cost_fn(theta_0, theta_1, plots):
     cost = sum(diff_squares) / (2 * len_dataset)
 
     return cost
-
-
-plots = [(0, 0), (1, 1), (2, 2)]
