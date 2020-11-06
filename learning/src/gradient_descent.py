@@ -1,29 +1,11 @@
 from .cost_function import cost_fn
-from prediction.src.estimate_price import estimate_price
+from .derivative_thetas import derivative_thetas
 
 
-def derivative_theta_0(theta_0, theta_1, plots):
-    return sum(
-        map(
-            lambda plot: estimate_price(theta_0, theta_1, plot.mileage) - plot.price,
-            plots,
-        )
-    ) / len(plots)
-
-
-def derivative_theta_1(theta_0, theta_1, plots):
-    return sum(
-        map(
-            lambda plot: (estimate_price(theta_0, theta_1, plot.mileage) - plot.price)
-            * plot.mileage,
-            plots,
-        )
-    ) / len(plots)
-
-
-def simultaneous_update(theta_0, theta_1, plots, learning_rate):
-    new_theta_0 = learning_rate * derivative_theta_0(theta_0, theta_1, plots)
-    new_theta_1 = learning_rate * derivative_theta_1(theta_0, theta_1, plots)
+def _simultaneous_update(theta_0, theta_1, plots, learning_rate):
+    deriv_theta_0, deriv_theta_1 = derivative_thetas(theta_0, theta_1, plots)
+    new_theta_0 = theta_0 - (learning_rate * deriv_theta_0)
+    new_theta_1 = theta_1 - (learning_rate * deriv_theta_1)
     return (new_theta_0, new_theta_1)
 
 
@@ -31,7 +13,7 @@ def gradient_descent(theta_0, theta_1, plots, learning_rate=0.01, iterations=100
     new_theta_0 = theta_0
     new_theta_1 = theta_1
     for i in range(iterations):
-        new_theta_0, new_theta_1 = simultaneous_update(
+        new_theta_0, new_theta_1 = _simultaneous_update(
             new_theta_0, new_theta_1, plots, learning_rate
         )
 
