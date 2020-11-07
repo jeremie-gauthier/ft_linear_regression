@@ -10,11 +10,10 @@ def _simultaneous_update(theta_0, theta_1, plots, learning_rate):
 
 
 def gradient_descent(theta_0, theta_1, plots, learning_rate, iterations):
-    new_theta_0 = theta_0
-    new_theta_1 = theta_1
+    new_theta_0 = 0
+    new_theta_1 = 0
     for i in range(iterations):
         new_theta_0, new_theta_1 = _simultaneous_update(
             new_theta_0, new_theta_1, plots, learning_rate
         )
-
     return (new_theta_0, new_theta_1)
