@@ -8,3 +8,10 @@ def load_thetas():
     theta_1 = csv.dataframe(df, "theta_1")[0]
     return (theta_0, theta_1)
 
+
+def load_dataset():
+    df = csv.load("./learning/data.csv")
+
+    kms = csv.dataframe(df, "km")
+    prices = csv.dataframe(df, "price")
+    return (kms, prices)
