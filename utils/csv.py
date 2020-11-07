@@ -20,10 +20,10 @@ def dataframe(df, column_name):
         sys.exit(-1)
 
 
-def write_thetas(filename, thetas):
+def write_thetas(thetas):
     try:
         df = pd.DataFrame({"theta_0": [thetas[0]], "theta_1": [thetas[1]]})
-        df.to_csv(filename, mode="w", index=False)
+        df.to_csv("./thetas.csv", mode="w", index=False)
     except:
         print(f"Something goes wrong while writing new thetas", file=sys.stderr)
         sys.exit(-1)

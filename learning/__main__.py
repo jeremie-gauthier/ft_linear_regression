@@ -21,7 +21,7 @@ def learning(args):
     final_thetas = gradient_descent(
         *initial_thetas, normalized_plots, args.learning, args.iterations,
     )
-    csv.write_thetas("./thetas.csv", final_thetas)
+    csv.write_thetas(final_thetas)
 
     if args.show:
         plot.dataset(kms, prices)
