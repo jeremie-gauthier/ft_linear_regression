@@ -36,12 +36,22 @@ def learning(args):
         # plot.dataset(natural_plots)
 
         X = kms
-        Y = [estimate_price(*final_thetas, km) for km in kms]
-        Y2 = [denormalize(estimate_price(*final_thetas, km), prices) for km in kms]
-        line = [Data(x, y) for x, y in zip(X, Y)]
+        # normalized_kms = list(map(lambda km: normalize(km, kms), kms))
+        # Y = [(km, estimate_price(*final_thetas, km)) for km in kms]
+        normalized_kms = list(map(lambda km: normalize(km, kms), kms))
+        normalized_prices = list(map(lambda price: normalize(price, prices), prices))
+        print(prices)
+        Y2 = [
+            (
+                km,
+                estimate_price(*final_thetas, km),
+                denormalize(estimate_price(*final_thetas, km), prices),
+            )
+            for km in normalized_kms
+        ]
+        print(*final_thetas)
         for v in Y2:
             print(v)
-        # plot.show()
 
 
 if __name__ == "__main__":
@@ -51,7 +61,7 @@ if __name__ == "__main__":
         "--learning",
         help="set the learning rate (defaults to 0.001)",
         type=float,
-        default=0.001,
+        default=1,
     )
     parser.add_argument(
         "-i",
@@ -68,4 +78,5 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    print(args)
     learning(args)
