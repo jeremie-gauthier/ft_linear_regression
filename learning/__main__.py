@@ -29,6 +29,18 @@ def learning(args):
     )
     csv.write_thetas("./thetas.csv", final_thetas)
 
+    if args.show:
+        # natural_plots = [Data(x, y) for x, y in zip(kms, prices)]
+        # plot.dataset(natural_plots)
+
+        X = kms
+        Y = [estimate_price(*final_thetas, km) for km in kms]
+        Y2 = [denormalize(estimate_price(*final_thetas, km), prices) for km in kms]
+        line = [Data(x, y) for x, y in zip(X, Y)]
+        for v in Y2:
+            print(v)
+        # plot.show()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
