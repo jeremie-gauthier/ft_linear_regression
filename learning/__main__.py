@@ -45,5 +45,12 @@ if __name__ == "__main__":
         type=int,
         default=1000,
     )
+    parser.add_argument(
+        "-s",
+        "--show",
+        help="show the dataset with liner regression",
+        action="store_true",
+    )
+
     args = parser.parse_args()
     learning(args)
