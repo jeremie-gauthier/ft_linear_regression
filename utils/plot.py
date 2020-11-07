@@ -1,14 +1,10 @@
 import matplotlib.pyplot as plt
 
 
-def dataset(plots):
+def dataset(kms, prices):
     plt.ylabel("prices")
     plt.xlabel("mileage")
-    dataset = plt.plot(
-        list(map(lambda d: d.mileage, plots)),
-        list(map(lambda d: d.price, plots)),
-        "ro",
-    )
+    dataset = plt.plot(kms, prices, "ro")
     plt.setp(dataset, color="cornflowerblue")
 
 
