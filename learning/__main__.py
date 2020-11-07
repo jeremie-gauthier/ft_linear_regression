@@ -16,7 +16,9 @@ def _load_dataset():
 
 
 def _normalize_dataset(kms, prices):
-    return [Data(x, y) for x, y in zip(normalize(kms), normalize(prices))]
+    normalized_kms = map(lambda km: normalize(km, kms), kms)
+    normalized_prices = map(lambda price: normalize(price, prices), prices)
+    return [Data(x, y) for x, y in zip(normalized_kms, normalized_prices)]
 
 
 def learning(args):
