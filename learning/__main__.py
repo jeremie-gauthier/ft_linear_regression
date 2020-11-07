@@ -1,18 +1,10 @@
 import argparse
 from utils import csv, plot
 from utils.Data import Data
-from utils.load_thetas import load_thetas
+from utils.load_data import load_thetas, load_dataset
 from utils.normalization import normalize, denormalize
 from .src.gradient_descent import gradient_descent
 from prediction.src.estimate_price import estimate_price
-
-
-def _load_dataset():
-    df = csv.load("./learning/data.csv")
-
-    kms = csv.dataframe(df, "km")
-    prices = csv.dataframe(df, "price")
-    return (kms, prices)
 
 
 def _normalize_dataset(kms, prices):
@@ -23,7 +15,7 @@ def _normalize_dataset(kms, prices):
 
 def learning(args):
     initial_thetas = load_thetas()
-    kms, prices = _load_dataset()
+    kms, prices = load_dataset()
     normalized_plots = _normalize_dataset(kms, prices)
 
     final_thetas = gradient_descent(
@@ -32,26 +24,13 @@ def learning(args):
     csv.write_thetas("./thetas.csv", final_thetas)
 
     if args.show:
-        # natural_plots = [Data(x, y) for x, y in zip(kms, prices)]
-        # plot.dataset(natural_plots)
-
-        X = kms
-        # normalized_kms = list(map(lambda km: normalize(km, kms), kms))
-        # Y = [(km, estimate_price(*final_thetas, km)) for km in kms]
-        normalized_kms = list(map(lambda km: normalize(km, kms), kms))
-        normalized_prices = list(map(lambda price: normalize(price, prices), prices))
-        print(prices)
-        Y2 = [
-            (
-                km,
-                estimate_price(*final_thetas, km),
-                denormalize(estimate_price(*final_thetas, km), prices),
-            )
-            for km in normalized_kms
+        plot.dataset(kms, prices)
+        price_estimations = [
+            denormalize(estimate_price(*final_thetas, data.mileage), prices)
+            for data in normalized_plots
         ]
-        print(*final_thetas)
-        for v in Y2:
-            print(v)
+        plot.create_lin_reg(kms, price_estimations)
+        plot.show()
 
 
 if __name__ == "__main__":
@@ -59,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-l",
         "--learning",
-        help="set the learning rate (defaults to 0.001)",
+        help="set the learning rate (defaults to 1)",
         type=float,
         default=1,
     )
@@ -78,5 +57,4 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    print(args)
     learning(args)
