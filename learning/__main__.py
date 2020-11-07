@@ -1,9 +1,10 @@
-from utils import csv
-from utils.load_thetas import load_thetas
-from utils.normalization import normalize
-from .src.Data import Data
-from .src.gradient_descent import gradient_descent
 import argparse
+from utils import csv, plot
+from utils.Data import Data
+from utils.load_thetas import load_thetas
+from utils.normalization import normalize, denormalize
+from .src.gradient_descent import gradient_descent
+from prediction.src.estimate_price import estimate_price
 
 
 def _load_dataset():
@@ -21,10 +22,10 @@ def _normalize_dataset(kms, prices):
 def learning(args):
     initial_thetas = load_thetas()
     kms, prices = _load_dataset()
-    plots = _normalize_dataset(kms, prices)
+    normalized_plots = _normalize_dataset(kms, prices)
 
     final_thetas = gradient_descent(
-        initial_thetas[0], initial_thetas[1], plots, args.learning, args.iterations
+        *initial_thetas, normalized_plots, args.learning, args.iterations,
     )
     csv.write_thetas("./thetas.csv", final_thetas)
 
