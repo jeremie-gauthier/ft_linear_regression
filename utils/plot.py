@@ -9,14 +9,9 @@ def dataset(kms, prices):
     plt.setp(dataset, color="cornflowerblue")
 
 
-def update_lin_reg(line, *coords):
-    line.set_ydata(*coords)
-
-
-def create_lin_reg(kms, prices):
-    linear_regression = plt.plot(kms, prices)
-    plt.setp(linear_regression, color="red")
-    return linear_regression
+def linear_regression(kms, prices):
+    line = plt.plot(kms, prices)
+    plt.setp(line, color="red")
 
 
 def show():

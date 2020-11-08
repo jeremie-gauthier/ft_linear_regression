@@ -29,7 +29,7 @@ def learning(args):
             denormalize(estimate_price(*final_thetas, data.mileage), prices)
             for data in normalized_plots
         ]
-        plot.create_lin_reg(kms, price_estimations)
+        plot.linear_regression(kms, price_estimations)
         plot.show()
 
 
