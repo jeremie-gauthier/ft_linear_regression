@@ -9,7 +9,9 @@ def prediction(args):
     thetas = load_thetas()
     kms, prices = load_dataset()
     norm_mileage = normalize(args.mileage, kms)
-    estimation = denormalize(estimate_price(*thetas, norm_mileage), prices)
+    estimation = estimate_price(*thetas, norm_mileage)
+    if sum(thetas) != 0:
+        estimation = denormalize(estimation, prices)
 
     print(f"Estimation for {args.mileage} is {round(estimation, 2)}")
 
