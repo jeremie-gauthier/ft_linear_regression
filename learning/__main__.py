@@ -4,6 +4,7 @@ from utils.Data import Data
 from utils.load_data import load_thetas, load_dataset
 from utils.normalization import normalize, denormalize
 from .src.gradient_descent import gradient_descent
+from .src.cost_function import cost_fn
 from prediction.src.estimate_price import estimate_price
 
 
@@ -22,6 +23,11 @@ def learning(args):
         *initial_thetas, normalized_plots, args.learning, args.iterations,
     )
     csv.write_thetas(final_thetas)
+
+    if args.precision:
+        print(
+            f"The MSE between predicted and actual is {cost_fn(*final_thetas, normalized_plots)}"
+        )
 
     if args.show:
         plot.dataset(kms, prices)
@@ -54,6 +60,9 @@ if __name__ == "__main__":
         "--show",
         help="show the dataset with liner regression",
         action="store_true",
+    )
+    parser.add_argument(
+        "-p", "--precision", help="show the MSE value", action="store_true"
     )
 
     args = parser.parse_args()
